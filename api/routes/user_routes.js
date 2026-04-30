@@ -17,5 +17,6 @@ router.delete('/:id', auth.verificarToken, auth.verificarRol(['Admin']), userCon
 router.get('/:id', auth.verificarToken, auth.verificarMismoUsuarioOAdmin, userController.obtenerUsuario);
 
 router.put('/:id', auth.verificarToken, auth.verificarMismoUsuarioOAdmin, userController.actualizarUsuario);
+router.get('/pilotos/activos', auth.verificarToken, auth.verificarRol(['Admin']), userController.obtenerPilotos);
 
 module.exports = router;

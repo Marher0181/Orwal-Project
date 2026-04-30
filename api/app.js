@@ -3,6 +3,11 @@ const cors = require('cors');
 require('dotenv').config();
 
 const userRoutes = require('./routes/user_routes');
+const clienteRoutes = require('./routes/cliente_routes');
+const productoRoutes = require('./routes/producto_routes');
+const ubicacionRoutes = require('./routes/ubicacion_routes');
+const pedidoRoutes = require('./routes/pedido_routes');
+const reporteRoutes = require('./routes/reporte_routes')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 app.use('/api/usuarios', userRoutes);
+app.use('/api/clientes', clienteRoutes);
+app.use('/api/productos', productoRoutes);
+app.use('/api/ubicaciones', ubicacionRoutes);
+app.use('/api/pedidos', pedidoRoutes);
+app.use('/api/reportes', reporteRoutes);
 
 // Ruta de prueba pública
 app.get('/', (req, res) => {

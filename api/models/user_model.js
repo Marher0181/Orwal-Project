@@ -180,6 +180,13 @@ async function eliminarPermanente(id) {
     return result.rows[0];
 }
 
+
+async function listarPilotos() {
+    const query = `SELECT * FROM sp_listar_pilotos()`;
+    const result = await pool.query(query);
+    return result.rows;
+}
+
 module.exports = {
     crear,
     listar,
@@ -189,4 +196,5 @@ module.exports = {
     eliminarPermanente,
     obtenerRoles,
     login,
+    listarPilotos
 };

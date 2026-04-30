@@ -200,6 +200,15 @@ async function obtenerMiPerfil(req, res) {
     }
 }
 
+async function obtenerPilotos(req, res) {
+    try {
+        const pilotos = await userModel.listarPilotos();
+        res.status(200).json({ success: true, data: pilotos });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+}
+
 module.exports = {
     crearUsuario,
     listarUsuarios,
@@ -211,4 +220,5 @@ module.exports = {
     obtenerRoles,
     loginUsuario,
     obtenerMiPerfil,
+    obtenerPilotos
 };
