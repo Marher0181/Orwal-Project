@@ -1,30 +1,23 @@
 const reporteModel = require('../models/reporte_model');
 
-async function generarCuadreCierre(req, res) {
+async function obtenerConsolidado(req, res) {
     try {
-        const { fecha, expendio_id } = req.query;
+        const { fecha_inicio, fecha_fin } = req.query;
+        const reporte = await reporteModel.obtenerReporteConsolidado(fecha_inicio, fecha_fin);
         
-        if (!fecha) {
-            return res.status(400).json({ success: false, error: 'La fecha es obligatoria (YYYY-MM-DD)' });
-        }
-
-        const reporte = await reporteModel.obtenerCuadreCierre(fecha, expendio_id);
-        
-        // Calcular el Gran Total para hacerlo más fácil al frontend
-        const gran_total = reporte.reduce((sum, item) => sum + parseFloat(item.total_recaudado), 0);
-
-        res.status(200).json({ 
-            success: true, 
-            data: {
-                fecha,
-                expendio_id: expendio_id || 'Todos',
-                detalle_pagos: reporte,
-                gran_total
-            } 
+        res.status(200).json({
+            success: true,
+            data: reporte,
+            message: 'Reporte generado con éxito'
         });
     } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+        console.error('Error al generar reporte:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error interno al generar el reporte',
+            error: error.message
+        });
     }
 }
 
-module.exports = { generarCuadreCierre };
+module.exports = { obtenerConsolidado };
